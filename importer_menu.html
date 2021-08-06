@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<base target="_top">
+	<link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+</head>
+
+<body>
+	<div>
+    <b><label for="importSelector">Choose import type:</label></b>
+
+<select name="importSelector" id="importSelector">
+  <option value="Google">Google</option>
+  <option value="Facebook">Facebook</option>
+  <option value="QBO">QBO</option>
+</select>
+    <p><b><label for="importmonth">Choose import month and year:</label></b></p>
+    <p><input type="month" id="importmonth" name="importmonth"
+       min="2020-01"></p>
+    <p></p>
+		<input type="button" value="Run Importer" class="action" onclick="form_data()">
+		<input type="button" value="Close" onclick="google.script.host.close()" />
+
+
+    </div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+		</script>
+		<script>
+            function alertOnSucess(){
+        alert("Import Sucessfull!")
+        closeIt()
+      }
+      function alertOnFailure(){
+        alert("Import Failed, Check Logs For Error")
+        closeIt()
+      }
+			function form_data(){
+        var values = {
+          "importDate":$("input[id=importmonth]").val(),  
+          "importType":$("#importSelector").val(),                             
+        };
+        google.script.run.withSuccessHandler(alertOnSucess).withFailureHandler(alertOnFailure).runImporter(values);
+      };
+      function closeIt(){
+        google.script.host.close()
+      };
+      
+		</script>
+</body>
+
+</html>
